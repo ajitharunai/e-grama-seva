@@ -1,0 +1,115 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String   @id @default(uuid())
+  employeeId   String   @unique
+  name         String
+  passwordHash String
+  role         String   @default("ADMIN") // ADMIN, OFFICER
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  
+  assignedComplaints Complaint[]
+}
+
+model Citizen {
+  id                 String   @id @default(uuid())
+  citizenId          String   @unique
+  passwordHash       String?
+  fullName           String
+  dob                DateTime
+  gender             String
+  maritalStatus      String
+  fathersName        String
+  aadhaar            String   @unique
+  mobileNumber       String?
+  bloodGroup         String?
+  religion           String?
+  caste              String?
+  
+  // Household Info
+  wardNumber         String
+  houseNumber        String
+  pincode            String
+  houseOwnership     String   // OWNED, RENTED
+  rationCardType     String   // APL, BPL
+  familyMembersCount Int
+  annualIncome       Float
+  
+  // Education & Work
+  educationLevel     String?
+  schoolName         String?
+  occupation         String?
+  monthlyIncome      Float?
+  
+  isActive           Boolean  @default(true)
+  createdAt          DateTime @default(now())
+  updatedAt          DateTime @updatedAt
+
+  complaints         Complaint[]
+  certificates       CertificateApplication[]
+  taxes              TaxRecord[]
+}
+
+model Complaint {
+  id               String   @id @default(uuid())
+  complaintId      String   @unique
+  category         String   // Road, Water, Electricity, Sanitation
+  description      String
+  wardNumber       String
+  priority         String   // HIGH, MEDIUM, LOW
+  status           String   @default("NEW") // NEW, IN_PROGRESS, RESOLVED
+  submittedDate    DateTime @default(now())
+  resolutionDate   DateTime?
+  
+  citizenId        String
+  citizen          Citizen  @relation(fields: [citizenId], references: [id])
+  
+  assignedOfficerId String?
+  assignedOfficer   User?   @relation(fields: [assignedOfficerId], references: [id])
+}
+
+model CertificateApplication {
+  id          String   @id @default(uuid())
+  type        String   // Residence, Income, Community, Birth
+  purpose     String
+  status      String   @default("PENDING") // PENDING, ISSUED, REJECTED
+  appliedDate DateTime @default(now())
+  issuedDate  DateTime?
+  
+  citizenId   String
+  citizen     Citizen  @relation(fields: [citizenId], references: [id])
+}
+
+model TaxRecord {
+  id              String   @id @default(uuid())
+  propertyId      String
+  demandAmount    Float
+  collectedAmount Float    @default(0)
+  balanceDue      Float
+  paymentMode     String?  // Cash, Online, Cheque
+  receiptNumber   String?
+  paymentDate     DateTime?
+  
+  citizenId       String
+  citizen         Citizen  @relation(fields: [citizenId], references: [id])
+}
+
+model WaterBody {
+  id              String   @id @default(uuid())
+  name            String
+  type            String   // Pond, Lake, OHT (Overhead Tank)
+  wardNumber      String
+  capacity        String   // e.g., "60,000 Liters", "~2 Acres"
+  status          String   @default("ACTIVE") // ACTIVE, NEEDS_MAINTENANCE, INACTIVE
+  lastMaintenance DateTime?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+}

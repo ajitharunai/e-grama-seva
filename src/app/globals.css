@@ -1,0 +1,55 @@
+@import "tailwindcss";
+
+@theme {
+  --color-primary-dark: #004D40;
+  --color-primary: #00695C;
+  --color-primary-light: #00897B;
+  --color-primary-pale: #26A69A;
+  
+  --color-accent-orange: #FF6D00;
+  --color-accent-light: #FF9E40;
+  
+  --color-bg-page: #E0F2F1;
+  --color-bg-card: #FFFFFF;
+  
+  --color-status-success: #00796B;
+  --color-status-warning: #F9A825;
+  --color-status-error: #D32F2F;
+  --color-status-info: #0277BD;
+  
+  --color-text-primary: #0D1F1C;
+  --color-text-secondary: #546E7A;
+  --color-text-on-dark: #FFFFFF;
+  
+  --color-border-light: #B2DFDB;
+
+  /* Custom Chart Colors */
+  --color-chart-1: #00695C;
+  --color-chart-2: #FF6D00;
+  --color-chart-3: #00897B;
+  --color-chart-4: #FF9E40;
+  --color-chart-5: #26A69A;
+  --color-chart-6: #80CBC4;
+  --color-chart-7: #FFCCBC;
+  --color-chart-8: #004D40;
+  
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+}
+
+body {
+  background-color: var(--color-bg-page);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Base custom utility classes based on the design spec */
+@layer utilities {
+  .shadow-card {
+    box-shadow: 0 4px 16px rgba(0, 105, 92, 0.10);
+  }
+  .shadow-card-hover {
+    box-shadow: 0 8px 24px rgba(0, 105, 92, 0.16);
+  }
+}
