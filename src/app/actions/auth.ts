@@ -48,3 +48,41 @@ export async function registerCitizen(data: {
     return { success: false, error: "An unexpected error occurred. Please try again." };
   }
 }
+
+export async function resetPasswordCitizen(data: {
+  aadhaar: string;
+  dob: string;
+  passwordRaw: string;
+}) {
+  try {
+    const citizen = await prisma.citizen.findUnique({
+      where: { aadhaar: data.aadhaar },
+    });
+
+    if (!citizen) {
+      return { success: false, error: "Aadhaar number not found in Panchayat records." };
+    }
+
+    const dobInput = new Date(data.dob).toISOString().split('T')[0];
+    const dobDB = citizen.dob.toISOString().split('T')[0];
+
+    if (dobInput !== dobDB) {
+      return { success: false, error: "Date of Birth does not match our records." };
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(data.passwordRaw, salt);
+
+    await prisma.citizen.update({
+      where: { id: citizen.id },
+      data: { passwordHash: hashedPassword },
+    });
+
+    return { success: true, message: "Password reset successful! You can now log in." };
+
+  } catch (error: any) {
+    console.error("Failed to reset password:", error);
+    return { success: false, error: "An unexpected error occurred. Please try again." };
+  }
+}
+
