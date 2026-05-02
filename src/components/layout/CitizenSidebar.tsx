@@ -14,7 +14,7 @@ import {
   LogOut,
   User
 } from "lucide-react";
-import { useSession } from "next-auth/react";
+import { useSession, signOut } from "next-auth/react";
 
 const navItems = [
   { name: "My Dashboard", tamil: "என் டாஷ்போர்டு", path: "/citizen", icon: LayoutDashboard },
@@ -84,9 +84,12 @@ export function CitizenSidebar() {
             <div className="text-white font-medium text-sm truncate">{session?.user?.name || "Citizen"}</div>
             <div className="text-[11px] text-teal-400 truncate">Resident</div>
           </div>
-          <a href="/api/auth/signout" className="text-teal-500 hover:opacity-100 hover:text-white p-2 rounded-lg hover:bg-teal-800 transition-colors">
+          <button 
+            onClick={() => signOut({ callbackUrl: "/login" })}
+            className="text-teal-500 hover:opacity-100 hover:text-white p-2 rounded-lg hover:bg-teal-800 transition-colors"
+          >
             <LogOut className="w-5 h-5" />
-          </a>
+          </button>
         </div>
       </div>
     </aside>

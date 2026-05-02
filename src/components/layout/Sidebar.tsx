@@ -18,6 +18,7 @@ import {
   Settings,
   LogOut
 } from "lucide-react";
+import { signOut } from "next-auth/react";
 
 const navItems = [
   { name: "Dashboard", tamil: "டாஷ்போர்டு", path: "/", icon: LayoutDashboard },
@@ -81,7 +82,10 @@ export function Sidebar() {
             <div className="text-white font-medium text-sm truncate">Admin Officer</div>
             <div className="text-[11px] text-[var(--color-primary-pale)] truncate">Karungalipadipatti VP</div>
           </div>
-          <button className="text-white opacity-70 hover:opacity-100 hover:text-[var(--color-accent-orange)] p-1">
+          <button 
+            onClick={() => signOut({ callbackUrl: "/login" })}
+            className="text-white opacity-70 hover:opacity-100 hover:text-[var(--color-accent-orange)] p-1"
+          >
             <LogOut className="w-5 h-5" />
           </button>
         </div>
