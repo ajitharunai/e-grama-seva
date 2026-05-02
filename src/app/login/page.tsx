@@ -151,7 +151,7 @@ export default function LoginPage() {
                 <p className="text-sm text-slate-600">
                   Not registered yet?{" "}
                   <a href="/register" className="font-medium text-teal-600 hover:text-teal-500">
-                    Create your password
+                    Register
                   </a>
                 </p>
               </div>
