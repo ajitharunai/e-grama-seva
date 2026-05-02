@@ -1,5 +1,5 @@
-import { PrismaClient } from '@prisma/client';
-import bcrypt from 'bcryptjs';
+const { PrismaClient } = require('@prisma/client');
+const bcrypt = require('bcryptjs');
 
 const prisma = new PrismaClient();
 
@@ -25,20 +25,28 @@ async function main() {
     where: { aadhaar: '618655223080' },
     update: { passwordHash: citizenPassword },
     create: {
-      citizenId: 'CIT001',
-      fullName: 'Test Citizen',
-      dob: new Date('1990-01-01'),
+      citizenId: 'CIT618655223080',
+      fullName: 'Ajith Kumar',
+      dob: new Date('1995-05-15'),
       gender: 'MALE',
+      maritalStatus: 'SINGLE',
+      fathersName: 'Murugan',
       aadhaar: '618655223080',
       mobileNumber: '9876543210',
-      wardNumber: '1',
-      houseNumber: '123',
-      pincode: '600001',
+      wardNumber: '5',
+      houseNumber: '42/A',
+      pincode: '606601',
+      houseOwnership: 'OWNED',
+      rationCardType: 'APL',
+      familyMembersCount: 4,
+      annualIncome: 150000,
       passwordHash: citizenPassword,
     },
   });
 
-  console.log('Seed completed successfully!');
+  console.log('Seed completed successfully! Use these credentials:');
+  console.log('Officer -> ID: EMP001, Pass: admin123');
+  console.log('Citizen -> Aadhaar: 618655223080, Pass: citizen123');
 }
 
 main()
