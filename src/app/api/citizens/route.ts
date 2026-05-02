@@ -7,7 +7,7 @@ export async function GET() {
       select: {
         id: true,
         fullName: true,
-        aadhaarNumber: true,
+        aadhaar: true,
       },
       orderBy: { fullName: "asc" },
     });

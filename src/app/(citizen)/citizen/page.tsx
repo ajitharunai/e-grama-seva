@@ -51,7 +51,7 @@ export default async function CitizenDashboard() {
       <div className="bg-gradient-to-br from-teal-600 to-teal-800 rounded-2xl p-8 text-white shadow-lg">
         <h1 className="text-3xl font-bold mb-2">Hello, {citizen.fullName}</h1>
         <p className="text-teal-100 flex items-center gap-2">
-          <MapPin className="w-4 h-4" /> Ward {citizen.wardNumber}, {citizen.address}
+          <MapPin className="w-4 h-4" /> Ward {citizen.wardNumber}, House {citizen.houseNumber}
         </p>
       </div>
 
