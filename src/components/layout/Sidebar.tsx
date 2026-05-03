@@ -36,11 +36,27 @@ const navItems = [
   { name: "Settings", tamil: "அமைப்புகள்", path: "/settings", icon: Settings },
 ];
 
-export function Sidebar() {
+interface SidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export function Sidebar({ isOpen, onClose }: SidebarProps) {
   const pathname = usePathname();
 
   return (
-    <aside className="w-[260px] h-screen bg-[var(--color-primary-dark)] flex flex-col fixed left-0 top-0 overflow-y-auto z-20">
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity duration-300"
+          onClick={onClose}
+        />
+      )}
+
+      <aside className={`w-[260px] h-screen bg-[var(--color-primary-dark)] flex flex-col fixed left-0 top-0 overflow-y-auto z-50 transition-transform duration-300 ease-in-out md:translate-x-0 ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      }`}>
       <div className="flex-1 py-6 space-y-1">
         {navItems.map((item) => {
           const isActive = pathname === item.path || (item.path !== "/" && pathname?.startsWith(item.path));
@@ -91,5 +107,6 @@ export function Sidebar() {
         </div>
       </div>
     </aside>
+    </>
   );
 }

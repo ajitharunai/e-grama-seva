@@ -27,12 +27,28 @@ const navItems = [
   { name: "File Complaint", tamil: "புகார் அளியுங்கள்", path: "/citizen/complaints/new", icon: MessageSquareWarning },
 ];
 
-export function CitizenSidebar() {
+interface CitizenSidebarProps {
+  isOpen?: boolean;
+  onClose?: () => void;
+}
+
+export function CitizenSidebar({ isOpen, onClose }: CitizenSidebarProps) {
   const pathname = usePathname();
   const { data: session } = useSession();
 
   return (
-    <aside className="w-[260px] h-screen bg-teal-900 flex flex-col fixed left-0 top-0 overflow-y-auto z-20 shadow-xl">
+    <>
+      {/* Mobile Overlay */}
+      {isOpen && (
+        <div 
+          className="fixed inset-0 bg-black/50 z-40 md:hidden transition-opacity duration-300"
+          onClick={onClose}
+        />
+      )}
+
+      <aside className={`w-[260px] h-screen bg-teal-900 flex flex-col fixed left-0 top-0 overflow-y-auto z-50 transition-transform duration-300 ease-in-out md:translate-x-0 shadow-xl ${
+        isOpen ? "translate-x-0" : "-translate-x-full"
+      }`}>
       <div className="p-6 flex items-center gap-3 border-b border-teal-800">
         <div className="w-10 h-10 bg-white rounded-xl flex items-center justify-center shadow-sm">
           <User className="w-6 h-6 text-teal-600" />
@@ -93,5 +109,6 @@ export function CitizenSidebar() {
         </div>
       </div>
     </aside>
+    </>
   );
 }

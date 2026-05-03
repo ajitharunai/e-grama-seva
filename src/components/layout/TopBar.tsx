@@ -1,15 +1,27 @@
-import { Bell, Leaf, Landmark, RefreshCw } from "lucide-react";
+import { Bell, Leaf, Landmark, RefreshCw, Menu } from "lucide-react";
 
-export function TopBar() {
+interface TopBarProps {
+  onMenuClick?: () => void;
+}
+
+export function TopBar({ onMenuClick }: TopBarProps) {
   return (
-    <header className="h-[64px] bg-gradient-to-r from-[var(--color-primary-dark)] to-[var(--color-primary)] flex items-center justify-between px-6 sticky top-0 z-30 shadow-md ml-[260px]">
+    <header className="h-[64px] bg-gradient-to-r from-[var(--color-primary-dark)] to-[var(--color-primary)] flex items-center justify-between px-6 sticky top-0 z-30 shadow-md md:ml-[260px] ml-0">
       
-      {/* Left: Logo & Title */}
+      {/* Left: Menu Toggle (Mobile) & Logo */}
       <div className="flex items-center gap-3">
-        <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
-          <Leaf className="w-5 h-5 text-white" />
+        <button 
+          onClick={onMenuClick}
+          className="p-1 text-white md:hidden hover:bg-white/10 rounded-md transition-colors"
+        >
+          <Menu className="w-6 h-6" />
+        </button>
+        <div className="flex items-center gap-2">
+          <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+            <Leaf className="w-5 h-5 text-white" />
+          </div>
+          <h1 className="text-white font-bold text-[18px] tracking-tight">Gram Seva</h1>
         </div>
-        <h1 className="text-white font-bold text-[18px] tracking-tight">Gram Seva Portal</h1>
       </div>
 
       {/* Center: Village Info */}

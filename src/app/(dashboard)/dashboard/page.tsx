@@ -19,11 +19,11 @@ export default async function DashboardPage() {
   ];
 
   return (
-    <div className="space-y-6">
-      <div className="flex justify-between items-end">
+    <div className="space-y-4 md:space-y-6">
+      <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-2">
         <div>
-          <h1 className="text-3xl font-bold text-teal-950 tracking-tight">Dashboard Overview</h1>
-          <p className="text-slate-500 mt-1">Welcome back. Here's what's happening in your village today.</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-teal-950 tracking-tight">Dashboard Overview</h1>
+          <p className="text-sm md:text-base text-slate-500 mt-1">Welcome back. Here's what's happening in your village today.</p>
         </div>
       </div>
 

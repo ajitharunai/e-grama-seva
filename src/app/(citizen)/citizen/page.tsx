@@ -47,11 +47,11 @@ export default async function CitizenDashboard() {
   const totalDue = pendingTaxes.reduce((sum: number, t: any) => sum + t.balanceDue, 0);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-6 md:space-y-8">
       {/* Welcome Banner */}
-      <div className="bg-gradient-to-br from-teal-600 to-teal-800 rounded-2xl p-8 text-white shadow-lg">
-        <h1 className="text-3xl font-bold mb-2">Hello, {citizen.fullName}</h1>
-        <p className="text-teal-100 flex items-center gap-2">
+      <div className="bg-gradient-to-br from-teal-600 to-teal-800 rounded-2xl p-6 md:p-8 text-white shadow-lg">
+        <h1 className="text-2xl md:text-3xl font-bold mb-2">Hello, {citizen.fullName}</h1>
+        <p className="text-teal-100 flex items-center gap-2 text-sm md:text-base">
           <MapPin className="w-4 h-4" /> Ward {citizen.wardNumber}, House {citizen.houseNumber}
         </p>
       </div>
