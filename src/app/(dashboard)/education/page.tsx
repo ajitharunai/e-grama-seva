@@ -1,12 +1,23 @@
-import { GraduationCap, BookOpen, Users, School, TrendingUp, Search, Filter, Download } from "lucide-react";
+import { GraduationCap, BookOpen, Users, School, TrendingUp, Search, Filter, Download, Library, UserCheck, UserPlus } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { AddStudentRecordForm } from "@/components/education/AddStudentRecordForm";
+import { UpdateEducationStatsForm } from "@/components/education/UpdateEducationStatsForm";
 
 export default async function EducationPage() {
   const citizens = await prisma.citizen.findMany({
     select: { id: true, fullName: true, citizenId: true },
     orderBy: { fullName: "asc" }
   });
+
+  const stats = await prisma.educationStats.findUnique({
+    where: { id: "VILLAGE_STATS" }
+  }) || {
+    totalSchools: 0,
+    totalLibraries: 0,
+    maleLiteracyRate: 0,
+    femaleLiteracyRate: 0,
+    totalLiteracyRate: 0
+  };
 
   const studentRecords = await prisma.studentRecord.findMany({
     include: {
@@ -27,7 +38,7 @@ export default async function EducationPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
         <div className="flex items-center gap-3">
           <div className="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center text-teal-700 shadow-sm">
             <GraduationCap className="w-6 h-6" />
@@ -37,15 +48,18 @@ export default async function EducationPage() {
             <p className="text-slate-500 mt-1">Village student enrollment and educational records tracking.</p>
           </div>
         </div>
-        <AddStudentRecordForm citizens={citizens} />
+        <div className="flex flex-wrap gap-3">
+          <UpdateEducationStatsForm initialStats={stats} />
+          <AddStudentRecordForm citizens={citizens} />
+        </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {[
-          { label: "Total Students", value: studentRecords.length.toString(), icon: Users, color: "teal" },
-          { label: "SSLC Level", value: sslcRecords.length.toString(), icon: BookOpen, color: "orange" },
-          { label: "HSC Level", value: hscRecords.length.toString(), icon: BookOpen, color: "teal" },
-          { label: "College Level", value: collegeRecords.length.toString(), icon: GraduationCap, color: "orange" }
+          { label: "Total Schools", value: stats.totalSchools.toString(), icon: School, color: "teal" },
+          { label: "Enrolled Students", value: studentRecords.length.toString(), icon: Users, color: "orange" },
+          { label: "Village Libraries", value: stats.totalLibraries.toString(), icon: Library, color: "teal" },
+          { label: "Literacy Rate", value: `${stats.totalLiteracyRate}%`, icon: TrendingUp, color: "orange" }
         ].map((stat, i) => (
           <div key={i} className="bg-white rounded-xl p-6 border border-slate-100 shadow-sm flex flex-col justify-between">
             <div className={`p-3 ${stat.color === 'teal' ? 'bg-teal-50 text-teal-600' : 'bg-orange-50 text-orange-600'} rounded-lg w-fit mb-4`}>
@@ -54,6 +68,12 @@ export default async function EducationPage() {
             <div>
               <p className="text-slate-500 text-sm font-medium mb-1">{stat.label}</p>
               <h3 className="text-2xl font-bold text-slate-900">{stat.value}</h3>
+              {stat.label === "Literacy Rate" && (
+                <div className="mt-2 flex items-center gap-3 text-[10px] font-bold uppercase tracking-tight">
+                  <span className="text-blue-600">Men: {stats.maleLiteracyRate}%</span>
+                  <span className="text-pink-600">Women: {stats.femaleLiteracyRate}%</span>
+                </div>
+              )}
             </div>
           </div>
         ))}

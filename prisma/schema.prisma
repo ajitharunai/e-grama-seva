@@ -130,3 +130,13 @@ model WaterBody {
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 }
+
+model EducationStats {
+  id                String   @id @default("VILLAGE_STATS")
+  totalSchools      Int      @default(0)
+  totalLibraries    Int      @default(0)
+  maleLiteracyRate  Float    @default(0)
+  femaleLiteracyRate Float   @default(0)
+  totalLiteracyRate Float    @default(0)
+  updatedAt         DateTime @updatedAt
+}
