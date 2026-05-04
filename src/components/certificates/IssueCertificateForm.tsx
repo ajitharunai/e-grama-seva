@@ -56,11 +56,15 @@ export function IssueCertificateForm({ citizens }: { citizens: any[] }) {
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                 >
                   <option value="">-- Choose a Citizen --</option>
-                  {citizens.map(c => (
-                    <option key={c.id} value={c.id}>
-                      {c.fullName} (Aadhaar: {c.aadhaar.substring(0, 4)}...)
-                    </option>
-                  ))}
+                  {citizens?.map(c => {
+                    const totalBalance = c.taxes?.reduce((sum: number, t: any) => sum + (t.balanceDue || 0), 0) || 0;
+                    const taxInfo = totalBalance > 0 ? ` [Tax Due: ₹${totalBalance}]` : " [Tax Clear]";
+                    return (
+                      <option key={c.id} value={c.id}>
+                        {c.fullName} ({c.citizenId}) - Aadhaar: {c.aadhaar?.substring(0, 4)}... {taxInfo}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
 

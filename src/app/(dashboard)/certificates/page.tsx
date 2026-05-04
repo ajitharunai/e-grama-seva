@@ -12,7 +12,13 @@ export default async function CertificatesPage() {
     select: {
       id: true,
       fullName: true,
+      citizenId: true,
       aadhaar: true,
+      taxes: {
+        select: {
+          balanceDue: true
+        }
+      }
     },
     orderBy: { fullName: "asc" },
   });
@@ -90,6 +96,7 @@ export default async function CertificatesPage() {
             <thead className="text-xs text-slate-500 bg-slate-50 border-b border-slate-100 uppercase">
               <tr>
                 <th className="px-6 py-4 font-medium">Application ID</th>
+                <th className="px-6 py-4 font-medium">Citizen ID</th>
                 <th className="px-6 py-4 font-medium">Citizen Name</th>
                 <th className="px-6 py-4 font-medium">Certificate Type</th>
                 <th className="px-6 py-4 font-medium">Date Applied</th>
@@ -104,6 +111,7 @@ export default async function CertificatesPage() {
                     <td className="px-6 py-4 font-mono text-xs font-medium text-slate-900">
                       APP-{app.id.substring(0, 8).toUpperCase()}
                     </td>
+                    <td className="px-6 py-4 font-mono text-xs text-slate-600">{app.citizen.citizenId}</td>
                     <td className="px-6 py-4 font-medium text-slate-900">{app.citizen.fullName}</td>
                     <td className="px-6 py-4 text-slate-600">{app.type}</td>
                     <td className="px-6 py-4 text-slate-600">
@@ -131,7 +139,7 @@ export default async function CertificatesPage() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan={6} className="px-6 py-8 text-center text-slate-500">
+                  <td colSpan={7} className="px-6 py-8 text-center text-slate-500">
                     No certificate applications found.
                   </td>
                 </tr>

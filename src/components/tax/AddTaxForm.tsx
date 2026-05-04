@@ -4,7 +4,7 @@ import { useState } from "react";
 import { X, Receipt } from "lucide-react";
 import { addTaxCollection } from "@/app/actions/tax";
 
-export function AddTaxForm({ citizens }: { citizens: { id: string, fullName: string, citizenId: string }[] }) {
+export function AddTaxForm({ citizens }: { citizens: any[] }) {
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -88,9 +88,15 @@ export function AddTaxForm({ citizens }: { citizens: { id: string, fullName: str
                   required
                 >
                   <option value="">-- Choose Citizen --</option>
-                  {citizens.map(c => (
-                    <option key={c.id} value={c.id}>{c.fullName} ({c.citizenId})</option>
-                  ))}
+                  {citizens?.map(c => {
+                    const totalBalance = c.taxes?.reduce((sum: number, t: any) => sum + (t.balanceDue || 0), 0) || 0;
+                    const taxInfo = totalBalance > 0 ? ` [Due: ₹${totalBalance}]` : " [Clear]";
+                    return (
+                      <option key={c.id} value={c.id}>
+                        {c.fullName} ({c.citizenId}) {taxInfo}
+                      </option>
+                    );
+                  })}
                 </select>
               </div>
 
