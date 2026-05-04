@@ -50,12 +50,29 @@ model Citizen {
   monthlyIncome      Float?
   
   isActive           Boolean  @default(true)
+  photoUrl           String?
   createdAt          DateTime @default(now())
   updatedAt          DateTime @updatedAt
 
   complaints         Complaint[]
   certificates       CertificateApplication[]
   taxes              TaxRecord[]
+  studentRecords     StudentRecord[]
+}
+
+model StudentRecord {
+  id              String   @id @default(uuid())
+  level           String   // SSLC, HSC, COLLEGE
+  stream          String?  // Arts and Science, Engineering, Medicine, Law
+  institutionName String
+  yearOfStudy     String?
+  completionYear  Int?
+  
+  citizenId       String
+  citizen         Citizen  @relation(fields: [citizenId], references: [id])
+  
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }
 
 model Complaint {

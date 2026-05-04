@@ -17,6 +17,7 @@ type Citizen = {
   houseNumber: string;
   caste: string | null;
   annualIncome: number;
+  photoUrl: string | null;
 };
 
 export function CitizensTable({ initialData }: { initialData: Citizen[] }) {
@@ -78,9 +79,15 @@ export function CitizensTable({ initialData }: { initialData: Citizen[] }) {
                   >
                     <td className="px-6 py-4">
                       <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xs">
-                          {citizen.fullName.charAt(0).toUpperCase()}
-                        </div>
+                        {citizen.photoUrl ? (
+                          <div className="w-10 h-10 rounded-full border border-slate-200 overflow-hidden flex-shrink-0">
+                            <img src={citizen.photoUrl} alt={citizen.fullName} className="w-full h-full object-cover" />
+                          </div>
+                        ) : (
+                          <div className="w-10 h-10 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-xs flex-shrink-0">
+                            {citizen.fullName.charAt(0).toUpperCase()}
+                          </div>
+                        )}
                         <div>
                           <p className="font-medium text-slate-900">{citizen.fullName}</p>
                           <p className="text-xs text-slate-500">{citizen.gender} • {new Date(citizen.dob).getFullYear()}</p>
@@ -129,9 +136,15 @@ export function CitizensTable({ initialData }: { initialData: Citizen[] }) {
             </button>
 
             <div className="flex flex-col items-center text-center mt-6 mb-8">
-              <div className="w-20 h-20 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-3xl mb-4 shadow-inner">
-                {selectedCitizen.fullName.charAt(0).toUpperCase()}
-              </div>
+              {selectedCitizen.photoUrl ? (
+                <div className="w-24 h-24 rounded-full border-4 border-teal-50 overflow-hidden mb-4 shadow-md">
+                  <img src={selectedCitizen.photoUrl} alt={selectedCitizen.fullName} className="w-full h-full object-cover" />
+                </div>
+              ) : (
+                <div className="w-20 h-20 rounded-full bg-teal-100 text-teal-700 flex items-center justify-center font-bold text-3xl mb-4 shadow-inner">
+                  {selectedCitizen.fullName.charAt(0).toUpperCase()}
+                </div>
+              )}
               <h2 className="text-xl font-bold text-teal-950">{selectedCitizen.fullName}</h2>
               <p className="text-sm text-slate-500 font-mono mt-1">{selectedCitizen.citizenId}</p>
             </div>

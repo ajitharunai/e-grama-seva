@@ -13,6 +13,7 @@ export async function addCitizen(data: {
   wardNumber: number;
   casteCategory?: string;
   annualIncome?: number;
+  photoUrl?: string;
 }) {
   try {
     const citizenId = `CIT-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
@@ -35,6 +36,7 @@ export async function addCitizen(data: {
         rationCardType: "APL",
         familyMembersCount: 1,
         annualIncome: data.annualIncome || 0,
+        photoUrl: data.photoUrl || null,
       },
     });
 

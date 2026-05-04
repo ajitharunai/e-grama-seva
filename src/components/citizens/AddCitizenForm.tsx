@@ -24,6 +24,7 @@ export function AddCitizenForm() {
     wardNumber: "",
     casteCategory: "",
     annualIncome: "",
+    photoUrl: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -42,6 +43,7 @@ export function AddCitizenForm() {
       ...formData,
       wardNumber: parseInt(formData.wardNumber, 10),
       annualIncome: formData.annualIncome ? parseFloat(formData.annualIncome) : undefined,
+      photoUrl: formData.photoUrl || undefined,
     });
 
     setIsLoading(false);
@@ -139,6 +141,18 @@ export function AddCitizenForm() {
                     <option value="FEMALE">Female</option>
                     <option value="OTHER">Other</option>
                   </select>
+                </div>
+                <div className="md:col-span-2">
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Citizen Photo URL <span className="text-red-500">*</span></label>
+                  <div className="flex gap-4 items-start">
+                    <Input name="photoUrl" value={formData.photoUrl} onChange={handleChange} placeholder="https://example.com/photo.jpg" required />
+                    {formData.photoUrl && (
+                      <div className="w-16 h-16 rounded-lg border border-slate-200 overflow-hidden flex-shrink-0">
+                        <img src={formData.photoUrl} alt="Preview" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
+                      </div>
+                    )}
+                  </div>
+                  <p className="text-xs text-slate-400 mt-1">Please provide a direct image link (JPEG, PNG).</p>
                 </div>
               </div>
             </div>
