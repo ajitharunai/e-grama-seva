@@ -69,7 +69,7 @@ export function CitizenSidebar({ isOpen, onClose }: CitizenSidebarProps) {
             <Link 
               key={item.path} 
               href={item.path}
-              className={`flex items-start px-6 py-3 border-l-4 transition-all duration-200 ${
+              className={`flex items-start px-6 py-3 border-l-4 transition-all duration-200 group ${
                 isActive 
                   ? "border-teal-400 bg-teal-800 shadow-inner" 
                   : "border-transparent hover:bg-teal-800/50 hover:border-teal-700"
@@ -77,9 +77,8 @@ export function CitizenSidebar({ isOpen, onClose }: CitizenSidebarProps) {
             >
               <item.icon 
                 className={`w-5 h-5 mt-0.5 mr-3 shrink-0 transition-colors ${
-                  isActive ? "text-teal-300" : "text-teal-500"
-                }`} 
-              />
+                  isActive ? "text-teal-300" : "text-teal-400/80 group-hover:text-teal-200"
+                }`}              />
               <div>
                 <div className={`text-[15px] transition-colors ${isActive ? "text-white font-bold" : "text-teal-100 font-medium"}`}>
                   {item.name}

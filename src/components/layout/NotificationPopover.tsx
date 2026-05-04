@@ -48,7 +48,7 @@ export function NotificationPopover() {
       <button 
         onClick={() => setIsOpen(!isOpen)}
         className={`relative p-2 rounded-full transition-all ${
-          isOpen ? "bg-white/20 text-white" : "text-slate-400 md:text-white hover:bg-black/10"
+          isOpen ? "bg-white/20 text-white" : "text-white/70 hover:text-white hover:bg-white/10"
         }`}
       >
         <Bell className="w-5 h-5" />
