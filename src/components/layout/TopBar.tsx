@@ -1,4 +1,5 @@
-import { Bell, Leaf, Landmark, RefreshCw, Menu } from "lucide-react";
+import { Leaf, Landmark, RefreshCw, Menu } from "lucide-react";
+import { NotificationPopover } from "./NotificationPopover";
 
 interface TopBarProps {
   onMenuClick?: () => void;
@@ -42,10 +43,7 @@ export function TopBar({ onMenuClick }: TopBarProps) {
         </div>
 
         {/* Notifications */}
-        <button className="relative p-1 text-white hover:opacity-80 transition-opacity">
-          <Bell className="w-5 h-5" />
-          <span className="absolute top-0 right-0 w-2.5 h-2.5 bg-[var(--color-accent-orange)] rounded-full border border-[var(--color-primary)]"></span>
-        </button>
+        <NotificationPopover />
 
         {/* Admin Profile */}
         <div className="flex items-center gap-3 border-l border-white/20 pl-6">

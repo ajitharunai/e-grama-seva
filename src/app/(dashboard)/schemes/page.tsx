@@ -1,4 +1,5 @@
 import { Briefcase, ArrowRight, ShieldCheck, HeartHandshake, Home as HomeIcon } from "lucide-react";
+import Link from "next/link";
 
 export default function SchemesPage() {
   return (
@@ -31,9 +32,9 @@ export default function SchemesPage() {
           </div>
           <div className="bg-slate-50 px-6 py-3 border-t border-slate-100 flex justify-between items-center">
             <span className="text-xs font-medium px-2 py-1 bg-green-100 text-green-700 rounded-full">Active</span>
-            <button className="text-teal-600 hover:text-teal-700 text-sm font-medium flex items-center gap-1">
+            <Link href="/citizens" className="text-teal-600 hover:text-teal-700 text-sm font-medium flex items-center gap-1">
               View List <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -52,9 +53,9 @@ export default function SchemesPage() {
           </div>
           <div className="bg-slate-50 px-6 py-3 border-t border-slate-100 flex justify-between items-center">
             <span className="text-xs font-medium px-2 py-1 bg-green-100 text-green-700 rounded-full">Active</span>
-            <button className="text-teal-600 hover:text-teal-700 text-sm font-medium flex items-center gap-1">
+            <Link href="/citizens" className="text-teal-600 hover:text-teal-700 text-sm font-medium flex items-center gap-1">
               View List <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
         </div>
 
@@ -73,9 +74,9 @@ export default function SchemesPage() {
           </div>
           <div className="bg-slate-50 px-6 py-3 border-t border-slate-100 flex justify-between items-center">
             <span className="text-xs font-medium px-2 py-1 bg-green-100 text-green-700 rounded-full">Active</span>
-            <button className="text-teal-600 hover:text-teal-700 text-sm font-medium flex items-center gap-1">
+            <Link href="/citizens" className="text-teal-600 hover:text-teal-700 text-sm font-medium flex items-center gap-1">
               View List <ArrowRight className="w-4 h-4" />
-            </button>
+            </Link>
           </div>
         </div>
       </div>

@@ -52,6 +52,34 @@ export default function ReportsPage() {
             </button>
           </div>
         </div>
+
+        <div className="bg-white p-6 rounded-xl border border-slate-100 shadow-sm lg:col-span-2">
+          <div className="flex items-center gap-3 mb-4">
+            <div className="p-2 bg-blue-50 text-blue-600 rounded-lg">
+              <BarChart className="w-5 h-5" />
+            </div>
+            <h3 className="text-lg font-bold text-teal-950">Village Budget & Expenditure</h3>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 text-center">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Budget</p>
+              <p className="text-xl font-black text-slate-900">₹45.50 Lakhs</p>
+            </div>
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 text-center">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Total Spent</p>
+              <p className="text-xl font-black text-teal-600">₹32.15 Lakhs</p>
+            </div>
+            <div className="p-4 bg-slate-50 rounded-xl border border-slate-100 text-center">
+              <p className="text-[10px] font-bold text-slate-400 uppercase tracking-wider mb-1">Available Funds</p>
+              <p className="text-xl font-black text-orange-600">₹13.35 Lakhs</p>
+            </div>
+          </div>
+          <div className="flex justify-end gap-3">
+            <button className="h-10 px-6 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-medium transition-colors flex items-center gap-2 shadow-sm">
+              <Download className="w-4 h-4" /> Download Full Budget Report
+            </button>
+          </div>
+        </div>
       </div>
     </div>
   );
