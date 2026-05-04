@@ -15,7 +15,7 @@ export default async function CitizenLayout({
   }
 
   return (
-    <CitizenLayoutWrapper userName={session.user.name}>
+    <CitizenLayoutWrapper userName={session.user.name ?? undefined}>
       {children}
     </CitizenLayoutWrapper>
   );
