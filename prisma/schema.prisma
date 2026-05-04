@@ -161,3 +161,14 @@ model EducationUpdate {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model VillageOfficial {
+  id          String   @id @default(uuid())
+  name        String
+  designation String   // President, Ward Member
+  wardNumber  String?  // Null for President
+  phoneNumber String?
+  photoUrl    String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

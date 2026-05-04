@@ -12,7 +12,8 @@ import {
   UsersRound, 
   FileText, 
   LogOut,
-  User
+  User,
+  ShieldCheck
 } from "lucide-react";
 import { useSession, signOut } from "next-auth/react";
 
@@ -23,6 +24,7 @@ const navItems = [
   { name: "Water Bodies", tamil: "நீர் நிலைகள்", path: "/citizen/water-bodies", icon: Droplets },
   { name: "Govt Schemes", tamil: "அரசு திட்டங்கள்", path: "/citizen/schemes", icon: ScrollText },
   { name: "Gram Sabha", tamil: "கிராம சபை", path: "/citizen/gram-sabha", icon: UsersRound },
+  { name: "Village Governance", tamil: "கிராம ஆட்சி", path: "/citizen/governance", icon: ShieldCheck },
   { name: "Reports", tamil: "அறிக்கைகள்", path: "/citizen/reports", icon: FileText },
   { name: "File Complaint", tamil: "புகார் அளியுங்கள்", path: "/citizen/complaints/new", icon: MessageSquareWarning },
 ];
