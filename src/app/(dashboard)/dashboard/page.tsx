@@ -13,7 +13,7 @@ export default async function DashboardPage() {
 
   // Fetch recent activity
   const [recentComplaints, recentTaxes] = await Promise.all([
-    prisma.complaint.findMany({ take: 3, orderBy: { createdAt: 'desc' } }),
+    prisma.complaint.findMany({ take: 3, orderBy: { submittedDate: 'desc' } }),
     prisma.taxRecord.findMany({ take: 2, orderBy: { paymentDate: 'desc' }, include: { citizen: true } }),
   ]);
 
@@ -71,7 +71,7 @@ export default async function DashboardPage() {
                   <p className="text-sm font-bold text-slate-900">{c.category}</p>
                   <p className="text-xs text-slate-500 line-clamp-1">{c.description}</p>
                 </div>
-                <span className="text-[10px] font-bold text-slate-400">{new Date(c.createdAt).toLocaleDateString()}</span>
+                <span className="text-[10px] font-bold text-slate-400">{new Date(c.submittedDate).toLocaleDateString()}</span>
               </div>
             ))}
             {recentTaxes.map(t => (
