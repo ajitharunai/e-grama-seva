@@ -2,6 +2,8 @@ import { FileText, CheckCircle2, Clock, XCircle, Search, Filter, Download } from
 import { prisma } from "@/lib/prisma";
 import { IssueCertificateForm } from "@/components/certificates/IssueCertificateForm";
 
+export const dynamic = 'force-dynamic';
+
 export default async function CertificatesPage() {
   const applications = await prisma.certificateApplication.findMany({
     include: { citizen: true },
@@ -9,17 +11,6 @@ export default async function CertificatesPage() {
   });
 
   const citizens = await prisma.citizen.findMany({
-    select: {
-      id: true,
-      fullName: true,
-      citizenId: true,
-      aadhaar: true,
-      taxes: {
-        select: {
-          balanceDue: true
-        }
-      }
-    },
     orderBy: { fullName: "asc" },
   });
 

@@ -2,6 +2,8 @@ import { IndianRupee, TrendingUp, Download, Search, Filter } from "lucide-react"
 import { prisma } from "@/lib/prisma";
 import { AddTaxForm } from "@/components/tax/AddTaxForm";
 
+export const dynamic = 'force-dynamic';
+
 export default async function TaxPage() {
   const taxRecords = await prisma.taxRecord.findMany({
     include: { citizen: true },
@@ -9,16 +11,6 @@ export default async function TaxPage() {
   });
 
   const citizens = await prisma.citizen.findMany({
-    select: { 
-      id: true, 
-      fullName: true, 
-      citizenId: true,
-      taxes: {
-        select: {
-          balanceDue: true
-        }
-      }
-    },
     orderBy: { fullName: 'asc' }
   });
 

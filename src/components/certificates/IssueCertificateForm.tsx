@@ -56,16 +56,22 @@ export function IssueCertificateForm({ citizens }: { citizens: any[] }) {
                   className="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-500"
                 >
                   <option value="">-- Choose a Citizen --</option>
+                  {citizens?.length === 0 && <option disabled>DEBUG: No citizens found in array</option>}
                   {citizens?.map(c => {
                     const totalBalance = c.taxes?.reduce((sum: number, t: any) => sum + (t.balanceDue || 0), 0) || 0;
-                    const taxInfo = totalBalance > 0 ? ` [Tax Due: ₹${totalBalance}]` : " [Tax Clear]";
+                    const taxInfo = totalBalance > 0 ? ` [Due: ₹${totalBalance}]` : " [Clear]";
+                    const displayName = c.fullName || "Unnamed Citizen";
+                    const displayId = c.citizenId || c.id?.substring(0, 8);
                     return (
                       <option key={c.id} value={c.id}>
-                        {c.fullName} ({c.citizenId}) - Aadhaar: {c.aadhaar?.substring(0, 4)}... {taxInfo}
+                        {displayName} ({displayId}) {taxInfo}
                       </option>
                     );
                   })}
                 </select>
+                {(!citizens || citizens.length === 0) && (
+                  <p className="text-xs text-orange-600 mt-1">Note: No citizens registered in the system.</p>
+                )}
               </div>
 
               <div className="space-y-2">
