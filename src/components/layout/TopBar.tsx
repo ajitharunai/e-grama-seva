@@ -7,7 +7,7 @@ interface TopBarProps {
 
 export function TopBar({ onMenuClick }: TopBarProps) {
   return (
-    <header className="h-[64px] bg-gradient-to-r from-[var(--color-primary-dark)] to-[var(--color-primary)] flex items-center justify-between px-6 sticky top-0 z-30 shadow-md md:ml-[260px] ml-0">
+    <header className="h-[64px] bg-gradient-to-r from-[var(--color-primary-dark)] to-[var(--color-primary)] flex items-center justify-between px-6 sticky top-0 z-30 shadow-md ml-0">
       
       {/* Left: Menu Toggle (Mobile) & Logo */}
       <div className="flex items-center gap-3">

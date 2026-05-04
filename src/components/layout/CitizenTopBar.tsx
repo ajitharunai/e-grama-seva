@@ -10,7 +10,7 @@ interface CitizenTopBarProps {
 
 export function CitizenTopBar({ onMenuClick, userName }: CitizenTopBarProps) {
   return (
-    <header className="h-[64px] bg-white border-b border-slate-100 flex items-center justify-between px-6 sticky top-0 z-30 shadow-sm md:ml-[260px] ml-0">
+    <header className="h-[64px] bg-white border-b border-slate-100 flex items-center justify-between px-6 sticky top-0 z-30 shadow-sm ml-0">
       
       {/* Left: Mobile Toggle & Title */}
       <div className="flex items-center gap-4">
