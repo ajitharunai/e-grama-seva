@@ -1,7 +1,10 @@
-import { GraduationCap, BookOpen, Users, School, TrendingUp, Search, Filter, Download, Library, UserCheck, UserPlus } from "lucide-react";
+import { GraduationCap, BookOpen, Users, School, TrendingUp, Search, Filter, Download, Library, UserCheck, UserPlus, Clock } from "lucide-react";
 import { prisma } from "@/lib/prisma";
 import { AddStudentRecordForm } from "@/components/education/AddStudentRecordForm";
 import { UpdateEducationStatsForm } from "@/components/education/UpdateEducationStatsForm";
+import { EducationalInstitutions } from "@/components/education/EducationalInstitutions";
+import { RecentUpdates } from "@/components/education/RecentUpdates";
+import { AddEducationMetaForm } from "@/components/education/AddEducationMetaForm";
 
 export default async function EducationPage() {
   const citizens = await prisma.citizen.findMany({
@@ -32,6 +35,14 @@ export default async function EducationPage() {
     orderBy: { createdAt: 'desc' }
   });
 
+  const schools = await prisma.school.findMany({
+    orderBy: { createdAt: "desc" }
+  });
+
+  const updates = await prisma.educationUpdate.findMany({
+    orderBy: { date: "desc" }
+  });
+
   const sslcRecords = studentRecords.filter(r => r.level === 'SSLC');
   const hscRecords = studentRecords.filter(r => r.level === 'HSC');
   const collegeRecords = studentRecords.filter(r => r.level === 'COLLEGE');
@@ -49,12 +60,13 @@ export default async function EducationPage() {
           </div>
         </div>
         <div className="flex flex-wrap gap-3">
+          <AddEducationMetaForm />
           <UpdateEducationStatsForm initialStats={stats} />
           <AddStudentRecordForm citizens={citizens} />
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {[
           { label: "Total Schools", value: stats.totalSchools.toString(), icon: School, color: "teal" },
           { label: "Enrolled Students", value: studentRecords.length.toString(), icon: Users, color: "orange" },
@@ -77,6 +89,15 @@ export default async function EducationPage() {
             </div>
           </div>
         ))}
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="lg:col-span-2">
+          <EducationalInstitutions institutions={schools} />
+        </div>
+        <div>
+          <RecentUpdates updates={updates} />
+        </div>
       </div>
 
       <div className="space-y-8">

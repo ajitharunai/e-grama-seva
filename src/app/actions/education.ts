@@ -113,3 +113,75 @@ export async function getEducationStats() {
     return null;
   }
 }
+
+export async function addSchool(data: {
+  name: string;
+  type: string;
+  wardNumber: string;
+  address: string;
+  studentCount: number;
+  teacherCount: number;
+}) {
+  try {
+    const school = await prisma.school.create({
+      data: {
+        name: data.name,
+        type: data.type,
+        wardNumber: data.wardNumber,
+        address: data.address,
+        studentCount: data.studentCount,
+        teacherCount: data.teacherCount,
+      },
+    });
+
+    revalidatePath("/education");
+    return { success: true, data: school };
+  } catch (error) {
+    console.error("Failed to add school:", error);
+    return { success: false, error: "Failed to add institution." };
+  }
+}
+
+export async function getSchools() {
+  try {
+    return await prisma.school.findMany({
+      orderBy: { createdAt: "desc" }
+    });
+  } catch (error) {
+    console.error("Failed to fetch schools:", error);
+    return [];
+  }
+}
+
+export async function addEducationUpdate(data: {
+  title: string;
+  description: string;
+  date?: Date;
+}) {
+  try {
+    const update = await prisma.educationUpdate.create({
+      data: {
+        title: data.title,
+        description: data.description,
+        date: data.date || new Date(),
+      },
+    });
+
+    revalidatePath("/education");
+    return { success: true, data: update };
+  } catch (error) {
+    console.error("Failed to add update:", error);
+    return { success: false, error: "Failed to add update." };
+  }
+}
+
+export async function getEducationUpdates() {
+  try {
+    return await prisma.educationUpdate.findMany({
+      orderBy: { date: "desc" }
+    });
+  } catch (error) {
+    console.error("Failed to fetch updates:", error);
+    return [];
+  }
+}
