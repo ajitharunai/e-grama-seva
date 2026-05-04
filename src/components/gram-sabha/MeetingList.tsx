@@ -1,7 +1,6 @@
 "use client";
 
 import { Calendar, Clock, MapPin, Trash2, CheckCircle2, AlertCircle } from "lucide-react";
-import { format } from "date-fns";
 import { updateMeetingStatus, deleteMeeting } from "@/app/actions/gram-sabha";
 import { useState } from "react";
 
