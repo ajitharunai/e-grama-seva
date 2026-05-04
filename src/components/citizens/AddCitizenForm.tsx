@@ -143,16 +143,33 @@ export function AddCitizenForm() {
                   </select>
                 </div>
                 <div className="md:col-span-2">
-                  <label className="block text-sm font-medium text-slate-700 mb-1">Citizen Photo URL <span className="text-red-500">*</span></label>
-                  <div className="flex gap-4 items-start">
-                    <Input name="photoUrl" value={formData.photoUrl} onChange={handleChange} placeholder="https://example.com/photo.jpg" required />
+                  <label className="block text-sm font-medium text-slate-700 mb-1">Citizen Photo <span className="text-red-500">*</span></label>
+                  <div className="flex gap-4 items-center">
+                    <div className="flex-1">
+                      <input 
+                        type="file" 
+                        accept="image/*"
+                        onChange={(e) => {
+                          const file = e.target.files?.[0];
+                          if (file) {
+                            const reader = new FileReader();
+                            reader.onloadend = () => {
+                              setFormData(prev => ({ ...prev, photoUrl: reader.result as string }));
+                            };
+                            reader.readAsDataURL(file);
+                          }
+                        }}
+                        className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-teal-50 file:text-teal-700 hover:file:bg-teal-100 transition-all cursor-pointer"
+                        required={!formData.photoUrl}
+                      />
+                    </div>
                     {formData.photoUrl && (
-                      <div className="w-16 h-16 rounded-lg border border-slate-200 overflow-hidden flex-shrink-0">
-                        <img src={formData.photoUrl} alt="Preview" className="w-full h-full object-cover" onError={(e) => (e.currentTarget.style.display = 'none')} />
+                      <div className="w-16 h-16 rounded-lg border border-slate-200 overflow-hidden flex-shrink-0 shadow-sm">
+                        <img src={formData.photoUrl} alt="Preview" className="w-full h-full object-cover" />
                       </div>
                     )}
                   </div>
-                  <p className="text-xs text-slate-400 mt-1">Please provide a direct image link (JPEG, PNG).</p>
+                  <p className="text-xs text-slate-400 mt-2">Upload a clear passport size photo (JPEG, PNG).</p>
                 </div>
               </div>
             </div>
@@ -236,6 +253,14 @@ export function AddCitizenForm() {
                     <p className="text-slate-500 mb-1">Address</p>
                     <p className="font-medium text-slate-900">{formData.address || "-"}</p>
                   </div>
+                  {formData.photoUrl && (
+                    <div className="col-span-2 flex flex-col gap-1">
+                      <p className="text-slate-500">Citizen Photo</p>
+                      <div className="w-20 h-20 rounded-lg border border-slate-200 overflow-hidden shadow-sm">
+                        <img src={formData.photoUrl} alt="Review" className="w-full h-full object-cover" />
+                      </div>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
