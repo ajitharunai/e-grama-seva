@@ -172,3 +172,15 @@ model VillageOfficial {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model GramSabhaMeeting {
+  id          String   @id @default(uuid())
+  topic       String
+  date        DateTime
+  time        String
+  venue       String
+  status      String   @default("SCHEDULED") // SCHEDULED, COMPLETED, CANCELLED
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

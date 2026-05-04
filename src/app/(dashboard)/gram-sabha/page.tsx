@@ -1,69 +1,73 @@
-import { CalendarDays, Users, FileText, CheckCircle } from "lucide-react";
+import { UsersRound, Calendar, Plus, MessageSquare, ShieldCheck, Info } from "lucide-react";
+import { getMeetings } from "@/app/actions/gram-sabha";
+import { MeetingList } from "@/components/gram-sabha/MeetingList";
+import { ScheduleMeetingForm } from "@/components/gram-sabha/ScheduleMeetingForm";
 
-export default function GramSabhaPage() {
+export default async function GramSabhaPage() {
+  const meetings = await getMeetings();
+
   return (
-    <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+    <div className="space-y-6 pb-12">
+      <div className="flex flex-col lg:flex-row justify-between items-start lg:items-center gap-4">
         <div className="flex items-center gap-3">
-          <div className="w-12 h-12 bg-teal-100 rounded-xl flex items-center justify-center text-teal-700 shadow-sm">
-            <Users className="w-6 h-6" />
+          <div className="w-12 h-12 bg-orange-100 rounded-xl flex items-center justify-center text-orange-700 shadow-sm">
+            <UsersRound className="w-6 h-6" />
           </div>
           <div>
-            <h1 className="text-3xl font-bold text-teal-950 tracking-tight">Gram Sabha</h1>
-            <p className="text-slate-500 mt-1">Schedules, agendas, and minutes for village council meetings.</p>
+            <h1 className="text-3xl font-bold text-slate-900 tracking-tight">Gram Sabha</h1>
+            <p className="text-slate-500 mt-1">Village council meetings, agenda, and public resolutions.</p>
           </div>
         </div>
-        <button className="inline-flex items-center justify-center h-10 px-4 py-2 bg-teal-600 hover:bg-teal-700 text-white rounded-lg text-sm font-medium transition-colors shadow-sm">
-          Schedule Meeting
-        </button>
+        <ScheduleMeetingForm />
       </div>
 
-      <div className="bg-gradient-to-br from-orange-500 to-orange-700 rounded-2xl p-8 text-white shadow-lg relative overflow-hidden">
-        <div className="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
-          <div>
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold bg-white/20 backdrop-blur-sm text-orange-50 mb-3 uppercase tracking-wider">
-              Upcoming Meeting
-            </span>
-            <h2 className="text-2xl font-bold mb-2">Independence Day Special Gram Sabha</h2>
-            <div className="flex flex-wrap items-center gap-4 text-orange-100 text-sm">
-              <span className="flex items-center gap-1.5"><CalendarDays className="w-4 h-4" /> Aug 15, 2026, 10:00 AM</span>
-              <span className="flex items-center gap-1.5"><Users className="w-4 h-4" /> Expected: 500+ Citizens</span>
-            </div>
+      <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
+        <div className="lg:col-span-3 space-y-6">
+          <div className="flex items-center justify-between">
+            <h2 className="text-xl font-bold text-slate-900 flex items-center gap-2">
+              <Calendar className="w-5 h-5 text-orange-600" />
+              Scheduled Meetings
+            </h2>
           </div>
-          <div className="flex gap-3">
-            <button className="px-4 py-2 bg-white text-orange-600 rounded-lg text-sm font-medium hover:bg-orange-50 transition-colors">
-              View Agenda
+          
+          <MeetingList meetings={meetings} isAdmin={true} />
+        </div>
+
+        <div className="space-y-6">
+          <div className="bg-white rounded-2xl p-6 border border-orange-100 shadow-sm bg-gradient-to-br from-white to-orange-50/30">
+            <h3 className="font-bold text-slate-900 mb-4 flex items-center gap-2">
+              <Info className="w-4 h-4 text-orange-500" />
+              What is Gram Sabha?
+            </h3>
+            <p className="text-sm text-slate-600 leading-relaxed">
+              Gram Sabha is the primary body of the Panchayati Raj system. It is a forum where the village community participates in local governance and decision-making.
+            </p>
+            <ul className="mt-4 space-y-3">
+              {[
+                "Approval of village budget",
+                "Identification of beneficiaries",
+                "Social audit of works",
+                "Resolution of local issues"
+              ].map((item, i) => (
+                <li key={i} className="flex items-start gap-2 text-xs text-slate-500">
+                  <div className="w-1.5 h-1.5 rounded-full bg-orange-400 mt-1.5 shrink-0" />
+                  {item}
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="bg-slate-900 rounded-2xl p-6 text-white shadow-lg overflow-hidden relative">
+            <ShieldCheck className="absolute -right-4 -bottom-4 w-24 h-24 text-white/5" />
+            <h3 className="font-bold mb-2 relative z-10">Meeting Protocols</h3>
+            <p className="text-xs text-slate-400 leading-relaxed relative z-10 mb-4">
+              Meetings must be announced at least 7 days in advance. Quorum requirements apply.
+            </p>
+            <button className="text-xs font-bold text-orange-400 hover:text-orange-300 transition-colors">
+              View Guidelines →
             </button>
           </div>
         </div>
-        <div className="absolute right-0 top-0 w-64 h-64 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-      </div>
-
-      <h3 className="text-xl font-bold text-teal-950 mt-8 mb-4">Past Meetings & Minutes</h3>
-      <div className="space-y-4">
-        {[
-          { title: "Republic Day Gram Sabha", date: "Jan 26, 2026", attendees: 412, status: "Minutes Published" },
-          { title: "Gandhi Jayanti Gram Sabha", date: "Oct 02, 2025", attendees: 385, status: "Minutes Published" },
-          { title: "May Day Special Gram Sabha", date: "May 01, 2025", attendees: 450, status: "Minutes Published" }
-        ].map((meeting, i) => (
-          <div key={i} className="bg-white p-5 rounded-xl border border-slate-100 shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-teal-100 transition-colors">
-            <div>
-              <h4 className="font-bold text-slate-900 mb-1">{meeting.title}</h4>
-              <div className="flex items-center gap-4 text-sm text-slate-500">
-                <span className="flex items-center gap-1"><CalendarDays className="w-4 h-4" /> {meeting.date}</span>
-                <span className="flex items-center gap-1"><Users className="w-4 h-4" /> {meeting.attendees} attended</span>
-              </div>
-            </div>
-            <div className="flex items-center gap-4">
-              <span className="inline-flex items-center text-xs font-medium text-teal-600 bg-teal-50 px-2.5 py-1 rounded-full">
-                <CheckCircle className="w-3 h-3 mr-1" /> {meeting.status}
-              </span>
-              <button className="text-slate-400 hover:text-teal-600 transition-colors">
-                <FileText className="w-5 h-5" />
-              </button>
-            </div>
-          </div>
-        ))}
       </div>
     </div>
   );

@@ -1,5 +1,8 @@
-import { User, Phone, MapPin, ShieldCheck } from "lucide-react";
-import Image from "next/image";
+"use client";
+
+import { User, Phone, MapPin, ShieldCheck, Trash2 } from "lucide-react";
+import { deleteOfficial } from "@/app/actions/officials";
+import { useState } from "react";
 
 interface Official {
   id: string;
@@ -10,7 +13,17 @@ interface Official {
   photoUrl: string | null;
 }
 
-export function VillageOfficials({ officials }: { officials: Official[] }) {
+export function VillageOfficials({ officials, isAdmin = false }: { officials: Official[], isAdmin?: boolean }) {
+  const [isDeleting, setIsDeleting] = useState<string | null>(null);
+
+  const handleDelete = async (id: string) => {
+    if (!confirm("Are you sure you want to remove this official?")) return;
+    
+    setIsDeleting(id);
+    await deleteOfficial(id);
+    setIsDeleting(null);
+  };
+
   const president = officials.find(o => o.designation === "President");
   const wardMembers = officials.filter(o => o.designation !== "President");
 
@@ -18,10 +31,21 @@ export function VillageOfficials({ officials }: { officials: Official[] }) {
     <div className="space-y-8">
       {/* President Section */}
       {president && (
-        <div className="bg-white rounded-2xl p-8 border border-teal-100 shadow-sm relative overflow-hidden">
+        <div className="bg-white rounded-2xl p-8 border border-teal-100 shadow-sm relative overflow-hidden group">
           <div className="absolute top-0 right-0 p-4">
             <ShieldCheck className="w-12 h-12 text-teal-500/10" />
           </div>
+
+          {isAdmin && (
+            <button 
+              onClick={() => handleDelete(president.id)}
+              disabled={isDeleting === president.id}
+              className="absolute top-4 right-4 p-2 bg-red-50 text-red-500 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500 hover:text-white z-20"
+              title="Delete Official"
+            >
+              <Trash2 className="w-4 h-4" />
+            </button>
+          )}
           
           <div className="flex flex-col md:flex-row items-center gap-8 relative z-10">
             <div className="relative w-32 h-32 rounded-2xl overflow-hidden bg-teal-50 border-4 border-white shadow-lg">
@@ -63,7 +87,17 @@ export function VillageOfficials({ officials }: { officials: Official[] }) {
       {/* Ward Members Section */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {wardMembers.map((member) => (
-          <div key={member.id} className="bg-white rounded-xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-shadow">
+          <div key={member.id} className="bg-white rounded-xl p-5 border border-slate-100 shadow-sm hover:shadow-md transition-all relative group">
+            {isAdmin && (
+              <button 
+                onClick={() => handleDelete(member.id)}
+                disabled={isDeleting === member.id}
+                className="absolute top-3 right-3 p-1.5 bg-red-50 text-red-500 rounded-md opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-500 hover:text-white z-20"
+              >
+                <Trash2 className="w-3.5 h-3.5" />
+              </button>
+            )}
+
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-lg overflow-hidden bg-slate-50 border border-slate-100 flex-shrink-0">
                 {member.photoUrl ? (

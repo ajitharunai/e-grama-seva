@@ -22,7 +22,7 @@ export default async function OfficialsPage() {
       </div>
 
       <div className="bg-slate-50 rounded-2xl p-8 border border-slate-100">
-        <VillageOfficials officials={officials} />
+        <VillageOfficials officials={officials} isAdmin={true} />
       </div>
     </div>
   );
